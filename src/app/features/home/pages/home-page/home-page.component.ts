@@ -52,7 +52,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   logoUrl$ = this.themeService.isDark$.pipe(
     map((isDark) =>
-      isDark ? './images/white-name.png' : './images/black-name.png',
+      isDark ? './images/black-name.png' : './images/white-name.png',
     ),
   );
 
