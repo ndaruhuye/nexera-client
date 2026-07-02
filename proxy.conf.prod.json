@@ -1,0 +1,15 @@
+{
+  "/api": {
+    "target": "https://api.nexeragroup.rw",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "warn",
+    "ws": true,
+    "xfwd": true,
+    "timeout": 15000,
+    "proxyTimeout": 15000,
+    "headers": {
+      "X-Environment": "production"
+    }
+  }
+}

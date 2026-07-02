@@ -1,0 +1,175 @@
+.app-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.app-input--block {
+  width: 100%;
+}
+
+.app-input__label {
+  color: var(--text-color);
+  font-size: var(--font-small);
+  font-weight: 700;
+}
+
+.app-input__required {
+  color: rgb(251, 44, 54);
+}
+
+.app-input__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.app-input__field {
+  width: 100%;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  font-weight: 500;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+}
+
+.app-input__field::placeholder {
+  color: var(--gray-color);
+  opacity: 0.8;
+}
+
+.app-input__field:focus {
+  border-color: rgba(43, 127, 255, 0.7);
+  box-shadow: 0 0 0 4px rgba(43, 127, 255, 0.12);
+}
+
+.app-input__field--textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+.app-input__icon {
+  position: absolute;
+  z-index: 2;
+  color: var(--gray-color);
+  pointer-events: none;
+  font-size: 0.95rem;
+  padding: 0;
+}
+
+.app-input__icon--left {
+  left: 1rem;
+}
+
+.app-input__action {
+  position: absolute;
+  right: 0.625rem;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background-color: transparent;
+  color: var(--gray-color);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-input__action:hover:not(:disabled) {
+  background-color: rgba(43, 127, 255, 0.1);
+  color: #2b7fff;
+}
+
+.app-input__action i {
+  padding: 0;
+}
+
+.app-input__hint,
+.app-input__error {
+  margin: 0;
+  font-size: var(--font-small);
+  line-height: 1.4;
+}
+
+.app-input__hint {
+  color: var(--gray-color);
+}
+
+.app-input__error {
+  color: rgb(251, 44, 54);
+  font-weight: 600;
+}
+
+/* ==================== Sizes ==================== */
+
+.app-input--sm .app-input__field {
+  min-height: 38px;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+}
+
+.app-input--md .app-input__field {
+  min-height: 46px;
+  padding: 0.75rem 1rem;
+  font-size: var(--font-medium);
+}
+
+.app-input--lg .app-input__field {
+  min-height: 54px;
+  padding: 0.875rem 1.125rem;
+  font-size: 1.0625rem;
+}
+
+.app-input--sm .app-input__field--textarea,
+.app-input--md .app-input__field--textarea,
+.app-input--lg .app-input__field--textarea {
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+}
+
+/* ==================== Icon / Action Padding ==================== */
+
+.app-input--with-left-icon .app-input__field {
+  padding-left: 2.75rem;
+}
+
+.app-input--with-right-action .app-input__field {
+  padding-right: 3rem;
+}
+
+/* ==================== Error ==================== */
+
+.app-input--error .app-input__field {
+  border-color: rgba(251, 44, 54, 0.8);
+  box-shadow: 0 0 0 4px rgba(251, 44, 54, 0.1);
+}
+
+.app-input--error .app-input__icon,
+.app-input--error .app-input__action {
+  color: rgb(251, 44, 54);
+}
+
+/* ==================== Disabled / Readonly ==================== */
+
+.app-input--disabled {
+  opacity: 0.65;
+}
+
+.app-input--disabled .app-input__field,
+.app-input--disabled .app-input__action {
+  cursor: not-allowed;
+}
+
+.app-input--readonly .app-input__field {
+  cursor: default;
+}

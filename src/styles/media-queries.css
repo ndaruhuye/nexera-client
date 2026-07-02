@@ -1,0 +1,51 @@
+@media (min-width: 481px) {
+  :root {
+    --font-hero: 2.25rem;
+    --font-page: 1.75rem;
+    --font-section: 1.5rem;
+    --font-subsection: 1.25rem;
+    --font-medium: 1.0625rem;
+    --font-small: 0.875rem;
+    --font-overline: 0.75rem;
+  }
+}
+
+@media (min-width: 769px) {
+  :root {
+    --font-hero: 2.75rem;
+    --font-page: 2rem;
+    --font-section: 1.75rem;
+    --font-subsection: 1.5rem;
+    --font-medium: 1.125rem;
+    --font-small: 0.9375rem;
+    --font-overline: 0.75rem;
+    --button-font-size: 0.75rem;
+    --button-padding: 8px 16px;
+    --button-gap: 8px;
+  }
+}
+
+@media (min-width: 1025px) {
+  :root {
+    --font-hero: 3.25rem;
+    --font-page: 2.5rem;
+    --font-section: 2rem;
+    --font-subsection: 1.75rem;
+    --font-medium: 1.125rem;
+    --font-small: 1rem;
+    --font-overline: 0.8125rem;
+    --button-font-size: 1rem;
+    --button-padding: 9px 24px;
+    --button-gap: 8px;
+  }
+}
+
+@media (min-width: 1441px) {
+  :root {
+    --font-hero: 3.75rem;
+    --font-page: 2.75rem;
+    --font-section: 2.5rem;
+    --font-subsection: 2rem;
+    --font-medium: 1.25rem;
+  }
+}

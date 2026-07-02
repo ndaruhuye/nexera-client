@@ -1,0 +1,259 @@
+<div class="about-page">
+  <!-- Hero -->
+  <section class="about-hero">
+    <div class="about-hero__background"></div>
+
+    <div class="about-hero__content" appAnimation="slide-up">
+      <p class="about-section__eyebrow">
+        {{ hero.eyebrow }}
+      </p>
+
+      <h1 class="about-hero__title">
+        {{ hero.title }}
+      </h1>
+
+      <p class="about-hero__subtitle">
+        {{ hero.subtitle }}
+      </p>
+
+      <div class="about-hero__actions">
+        <a
+          class="about-button about-button--primary"
+          [routerLink]="hero.primaryLink"
+        >
+          {{ hero.primaryCta }}
+        </a>
+
+        <a
+          class="about-button about-button--secondary"
+          [routerLink]="hero.secondaryLink"
+        >
+          {{ hero.secondaryCta }}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="about-section about-stats">
+    <article
+      *ngFor="let stat of stats; let i = index; trackBy: trackByTitle"
+      class="about-stat"
+      appAnimation="slide-up"
+      [appAnimationIndex]="i"
+      [appAnimationStep]="80"
+    >
+      <strong>{{ stat.value }}</strong>
+      <span>{{ stat.label }}</span>
+    </article>
+  </section>
+
+  <!-- Story -->
+  <section class="about-section about-story">
+    <div class="about-section__header" appAnimation="slide-up">
+      <p class="about-section__eyebrow">
+        Who We Are
+      </p>
+
+      <h2 class="about-section__title">
+        A technical partner for teams that want to build serious software.
+      </h2>
+    </div>
+
+    <div class="about-story__grid">
+      <div class="about-story__content" appAnimation="slide-up">
+        <p>
+          Nexera Group exists to help organizations build software that solves
+          real problems, supports real operations, and creates long-term
+          business value.
+        </p>
+
+        <p>
+          We work with founders, business leaders, and technical teams to turn
+          ideas into reliable digital products. Our approach combines product
+          thinking, software architecture, DevOps, security, and practical
+          engineering execution.
+        </p>
+
+        <p>
+          We believe good software should be clear, secure, scalable, and easy
+          to maintain. That is why we focus on strong foundations, clean
+          implementation, and long-term support instead of short-term shortcuts.
+        </p>
+      </div>
+
+      <aside class="about-story__panel" appAnimation="slide-left">
+        <span>Our Mission</span>
+
+        <h3>
+          Build technology that helps businesses operate better and grow faster.
+        </h3>
+
+        <p>
+          We aim to become a trusted engineering partner for companies that need
+          dependable digital systems, not just code delivery.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="about-section about-values">
+    <div class="about-section__header" appAnimation="slide-up">
+      <p class="about-section__eyebrow">
+        What We Believe
+      </p>
+
+      <h2 class="about-section__title">
+        Our values guide how we design, build, and support software.
+      </h2>
+
+      <p class="about-section__subtitle">
+        Every project is handled with a focus on quality, trust, clarity, and
+        long-term reliability.
+      </p>
+    </div>
+
+    <div class="about-card-grid">
+      <article
+        *ngFor="let value of values; let i = index; trackBy: trackByTitle"
+        class="about-card about-value-card"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="100"
+      >
+        <div class="about-card__icon">
+          <i [class]="value.icon" aria-hidden="true"></i>
+        </div>
+
+        <h3>{{ value.title }}</h3>
+
+        <p>{{ value.description }}</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="about-section about-timeline">
+    <div class="about-section__header" appAnimation="slide-up">
+      <p class="about-section__eyebrow">
+        How We Think
+      </p>
+
+      <h2 class="about-section__title">
+        We follow a practical path from discovery to continuous improvement.
+      </h2>
+    </div>
+
+    <div class="about-timeline__grid">
+      <article
+        *ngFor="let item of timeline; let i = index; trackBy: trackByTitle"
+        class="about-timeline__item"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="80"
+      >
+        <span>{{ item.step }}</span>
+
+        <h3>{{ item.title }}</h3>
+
+        <p>{{ item.description }}</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Principles -->
+  <section class="about-section about-principles">
+    <div class="about-principles__intro" appAnimation="slide-up">
+      <p class="about-section__eyebrow">
+        Engineering Principles
+      </p>
+
+      <h2 class="about-section__title">
+        We build systems that teams can trust and maintain.
+      </h2>
+
+      <p>
+        Our engineering mindset is simple: understand the business, design the
+        right foundation, build clearly, deploy safely, and improve continuously.
+      </p>
+    </div>
+
+    <div class="about-principles__list">
+      <article
+        *ngFor="let principle of principles; let i = index; trackBy: trackByTitle"
+        class="about-principle"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="100"
+      >
+        <span>
+          {{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}
+        </span>
+
+        <div>
+          <h3>{{ principle.title }}</h3>
+          <p>{{ principle.description }}</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Capabilities -->
+  <section class="about-section about-capabilities">
+    <div class="about-section__header" appAnimation="slide-up">
+      <p class="about-section__eyebrow">
+        Our Capabilities
+      </p>
+
+      <h2 class="about-section__title">
+        From product idea to production infrastructure.
+      </h2>
+
+      <p class="about-section__subtitle">
+        We bring together software development, architecture, deployment, and
+        long-term support to help your product succeed.
+      </p>
+    </div>
+
+    <div class="about-capabilities__grid">
+      <article
+        *ngFor="let capability of capabilities; let i = index; trackBy: trackByTitle"
+        class="about-capability"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="100"
+      >
+        <h3>{{ capability.title }}</h3>
+
+        <ul>
+          <li *ngFor="let point of capability.points">
+            {{ point }}
+          </li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="about-section about-cta">
+    <div class="about-cta__content" appAnimation="slide-up">
+      <p class="about-section__eyebrow">
+        Let’s Work Together
+      </p>
+
+      <h2>
+        Have an idea, system, or product you want to build better?
+      </h2>
+
+      <p>
+        Let’s discuss your goals and define the right technical path for your
+        next software project.
+      </p>
+
+      <a routerLink="/contact" class="about-button about-button--primary">
+        Talk to an Engineer
+      </a>
+    </div>
+  </section>
+</div>

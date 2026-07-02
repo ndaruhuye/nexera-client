@@ -1,0 +1,129 @@
+.alerts-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  animation: alerts-fade-in 0.2s ease forwards;
+}
+
+.alerts-backdrop--transparent {
+  cursor: default;
+}
+
+.alerts-dialog {
+  position: relative;
+  width: min(100%, 420px);
+  padding: 2rem;
+  border-radius: 24px;
+  background-color: var(--modal-bg);
+  color: var(--text-color);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.25),
+    0 0 0 1px var(--shadow-bg);
+  animation: alerts-slide-up 0.25s ease forwards;
+}
+
+.alerts-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--alert-color);
+  background-color: var(--alert-soft-color);
+}
+
+.alerts-icon i {
+  padding: 0;
+  font-size: 1.5rem;
+}
+
+.alerts-dialog--success {
+  --alert-color: rgb(0, 193, 106);
+  --alert-soft-color: rgba(0, 193, 106, 0.12);
+}
+
+.alerts-dialog--warning {
+  --alert-color: rgb(239, 177, 0);
+  --alert-soft-color: rgba(239, 177, 0, 0.14);
+}
+
+.alerts-dialog--error {
+  --alert-color: rgb(251, 44, 54);
+  --alert-soft-color: rgba(251, 44, 54, 0.12);
+}
+
+.alerts-dialog--info {
+  --alert-color: #2b7fff;
+  --alert-soft-color: rgba(43, 127, 255, 0.12);
+}
+
+.alerts-dialog--confirm {
+  --alert-color: #2b7fff;
+  --alert-soft-color: rgba(43, 127, 255, 0.12);
+}
+
+.alerts-content {
+  text-align: center;
+}
+
+.alerts-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-color);
+}
+
+.alerts-message {
+  margin-top: 0.75rem;
+  color: var(--gray-color);
+  font-size: var(--font-medium);
+  line-height: 1.6;
+}
+
+.alerts-actions {
+  margin-top: 1.75rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+@keyframes alerts-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes alerts-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .alerts-dialog {
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+
+  .alerts-actions {
+    flex-direction: column-reverse;
+  }
+}

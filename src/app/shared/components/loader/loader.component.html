@@ -1,0 +1,55 @@
+<div class="loader-wrapper" [ngClass]="wrapperClasses">
+  <div class="loader-content">
+    <ng-container [ngSwitch]="type">
+      <!-- Spinner Loader -->
+      <span
+        *ngSwitchCase="'spinner'"
+        class="loader loader-spinner"
+        [ngClass]="loaderClasses"
+        aria-hidden="true"
+      ></span>
+
+      <!-- Dots Loader -->
+      <span
+        *ngSwitchCase="'dots'"
+        class="loader loader-dots"
+        [ngClass]="loaderClasses"
+        aria-hidden="true"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+
+      <!-- Bar Loader -->
+      <span
+        *ngSwitchCase="'bar'"
+        class="loader loader-bar"
+        [ngClass]="loaderClasses"
+        aria-hidden="true"
+      >
+        <span></span>
+      </span>
+
+      <!-- Pulse Loader -->
+      <span
+        *ngSwitchCase="'pulse'"
+        class="loader loader-pulse"
+        [ngClass]="loaderClasses"
+        aria-hidden="true"
+      ></span>
+
+      <!-- Default fallback -->
+      <span
+        *ngSwitchDefault
+        class="loader loader-spinner"
+        [ngClass]="loaderClasses"
+        aria-hidden="true"
+      ></span>
+    </ng-container>
+
+    <p *ngIf="text" class="loader-text">
+      {{ text }}
+    </p>
+  </div>
+</div>

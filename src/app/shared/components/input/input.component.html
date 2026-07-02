@@ -1,0 +1,124 @@
+<div class="app-input" [ngClass]="wrapperClasses">
+  <label *ngIf="label" class="app-input__label" [for]="id">
+    {{ label }}
+    <span *ngIf="required" class="app-input__required">*</span>
+  </label>
+
+  <div class="app-input__control">
+    <i
+      *ngIf="leftIcon"
+      class="app-input__icon app-input__icon--left"
+      [class]="leftIcon"
+      aria-hidden="true"
+    ></i>
+
+    <textarea
+      *ngIf="isTextarea; else normalInput"
+      #inputRef
+      class="app-input__field app-input__field--textarea"
+      [id]="id"
+      [name]="name"
+      [rows]="rows"
+      [value]="value"
+      [placeholder]="placeholder"
+      [readonly]="readonly"
+      [disabled]="disabled"
+      [attr.required]="required ? true : null"
+      [attr.minlength]="minLength ?? null"
+      [attr.maxlength]="maxLength ?? null"
+      [attr.inputmode]="resolvedInputMode"
+      [attr.autocapitalize]="autocapitalize"
+      [attr.autocorrect]="autocorrect"
+      [attr.spellcheck]="spellcheck"
+      [attr.aria-invalid]="hasError"
+      [attr.aria-describedby]="describedById"
+      [autofocus]="autofocus"
+      (input)="handleInput($event)"
+      (blur)="handleBlur()"
+      (keydown)="handleKeydown($event)"
+    ></textarea>
+
+    <ng-template #normalInput>
+      <input
+        #inputRef
+        class="app-input__field"
+        [id]="id"
+        [name]="name"
+        [type]="resolvedInputType"
+        [value]="value"
+        [placeholder]="placeholder"
+        [readonly]="readonly"
+        [disabled]="disabled"
+        [autocomplete]="autocomplete"
+        [attr.required]="required ? true : null"
+        [attr.min]="min ?? null"
+        [attr.max]="max ?? null"
+        [attr.minlength]="minLength ?? null"
+        [attr.maxlength]="maxLength ?? null"
+        [attr.pattern]="pattern || null"
+        [attr.inputmode]="resolvedInputMode"
+        [attr.autocapitalize]="autocapitalize"
+        [attr.autocorrect]="autocorrect"
+        [attr.spellcheck]="spellcheck"
+        [attr.aria-invalid]="hasError"
+        [attr.aria-describedby]="describedById"
+        [autofocus]="autofocus"
+        (input)="handleInput($event)"
+        (blur)="handleBlur()"
+        (keydown)="handleKeydown($event)"
+      />
+    </ng-template>
+
+    <button
+      *ngIf="type === 'password'"
+      type="button"
+      class="app-input__action"
+      [disabled]="disabled || readonly"
+      [attr.aria-label]="passwordVisible ? 'Hide password' : 'Show password'"
+      (click)="togglePasswordVisibility()"
+    >
+      <i
+        [class]="passwordVisible ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"
+        aria-hidden="true"
+      ></i>
+    </button>
+
+    <button
+      *ngIf="type !== 'password' && clearable && hasValue"
+      type="button"
+      class="app-input__action"
+      [disabled]="disabled || readonly"
+      aria-label="Clear input"
+      (click)="clear()"
+    >
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+
+    <button
+      *ngIf="type !== 'password' && !clearable && rightIcon"
+      type="button"
+      class="app-input__action"
+      [disabled]="disabled || readonly"
+      aria-label="Input action"
+      (click)="handleRightIconClick()"
+    >
+      <i [class]="rightIcon" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <p
+    *ngIf="hint && !hasError"
+    class="app-input__hint"
+    [id]="id + '-description'"
+  >
+    {{ hint }}
+  </p>
+
+  <p
+    *ngIf="hasError"
+    class="app-input__error"
+    [id]="id + '-description'"
+  >
+    {{ resolvedErrorText }}
+  </p>
+</div>

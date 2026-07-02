@@ -1,0 +1,239 @@
+<div class="portfolio-page">
+  <!-- Hero -->
+  <section class="portfolio-hero">
+    <div class="portfolio-hero__background"></div>
+
+    <div class="portfolio-hero__content" appAnimation="slide-up">
+      <p class="portfolio-section__eyebrow">
+        {{ hero.eyebrow }}
+      </p>
+
+      <h1 class="portfolio-hero__title">
+        {{ hero.title }}
+      </h1>
+
+      <p class="portfolio-hero__subtitle">
+        {{ hero.subtitle }}
+      </p>
+
+      <div class="portfolio-hero__actions">
+        <a
+          class="portfolio-button portfolio-button--primary"
+          [routerLink]="hero.primaryLink"
+        >
+          {{ hero.primaryCta }}
+        </a>
+
+        <a
+          class="portfolio-button portfolio-button--secondary"
+          [routerLink]="hero.secondaryLink"
+        >
+          {{ hero.secondaryCta }}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics -->
+  <section class="portfolio-section portfolio-stats">
+    <article
+      *ngFor="let stat of stats; let i = index; trackBy: trackByTitle"
+      class="portfolio-stat"
+      appAnimation="slide-up"
+      [appAnimationIndex]="i"
+      [appAnimationStep]="80"
+    >
+      <strong>{{ stat.value }}</strong>
+      <span>{{ stat.label }}</span>
+    </article>
+  </section>
+
+  <!-- Introduction -->
+  <section class="portfolio-section portfolio-intro">
+    <div class="portfolio-section__header" appAnimation="slide-up">
+      <p class="portfolio-section__eyebrow">
+        Selected Work
+      </p>
+
+      <h2 class="portfolio-section__title">
+        Products designed to solve practical problems and support growth.
+      </h2>
+
+      <p class="portfolio-section__subtitle">
+        Our work covers business platforms, hospitality, media, public
+        information systems, and artificial intelligence. Each project combines
+        clear design with reliable engineering.
+      </p>
+    </div>
+
+    <!-- Filters -->
+    <div
+      class="portfolio-filters"
+      appAnimation="slide-up"
+      aria-label="Filter portfolio projects"
+    >
+      <button
+        *ngFor="let category of categories; trackBy: trackByCategory"
+        type="button"
+        class="portfolio-filter"
+        [class.portfolio-filter--active]="selectedCategory === category"
+        [attr.aria-pressed]="selectedCategory === category"
+        (click)="selectCategory(category)"
+      >
+        {{ category }}
+      </button>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="portfolio-section portfolio-projects">
+    <div class="portfolio-projects__grid">
+      <article
+        *ngFor="
+          let project of filteredProjects;
+          let i = index;
+          trackBy: trackByProject
+        "
+        class="portfolio-project"
+        [class.portfolio-project--featured]="project.featured"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="100"
+      >
+        <!-- Visual preview -->
+        <div class="portfolio-project__preview">
+          <div class="portfolio-project__preview-header">
+            <span>{{ project.number }}</span>
+
+            <span class="portfolio-project__category">
+              {{ project.category }}
+            </span>
+          </div>
+
+          <div class="portfolio-project__symbol">
+            {{ project.code }}
+          </div>
+
+          <div class="portfolio-project__preview-lines">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <!-- Project content -->
+        <div class="portfolio-project__content">
+          <div class="portfolio-project__heading">
+            <div>
+              <p>{{ project.category }}</p>
+              <h2>{{ project.name }}</h2>
+            </div>
+
+            <span *ngIf="project.featured" class="portfolio-project__featured">
+              Featured
+            </span>
+          </div>
+
+          <h3>{{ project.headline }}</h3>
+
+          <p class="portfolio-project__description">
+            {{ project.description }}
+          </p>
+
+          <ul class="portfolio-project__technologies">
+            <li
+              *ngFor="
+                let technology of project.technologies;
+                trackBy: trackByTechnology
+              "
+            >
+              {{ technology }}
+            </li>
+          </ul>
+
+          <a
+            class="portfolio-project__link"
+            [href]="project.link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>{{ project.linkLabel }}</span>
+
+            <i
+              class="fa-solid fa-arrow-up-right-from-square"
+              aria-hidden="true"
+            ></i>
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <p
+      *ngIf="filteredProjects.length === 0"
+      class="portfolio-projects__empty"
+    >
+      No projects are available in this category yet.
+    </p>
+  </section>
+
+  <!-- How We Build -->
+  <section class="portfolio-section portfolio-delivery">
+    <div class="portfolio-section__header" appAnimation="slide-up">
+      <p class="portfolio-section__eyebrow">
+        Behind Every Project
+      </p>
+
+      <h2 class="portfolio-section__title">
+        The same engineering standards across every product.
+      </h2>
+
+      <p class="portfolio-section__subtitle">
+        Different products require different technologies, but our focus on
+        clarity, reliability, security, and long-term value remains consistent.
+      </p>
+    </div>
+
+    <div class="portfolio-delivery__grid">
+      <article
+        *ngFor="
+          let principle of principles;
+          let i = index;
+          trackBy: trackByTitle
+        "
+        class="portfolio-delivery__card"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="100"
+      >
+        <span>{{ principle.number }}</span>
+        <h3>{{ principle.title }}</h3>
+        <p>{{ principle.description }}</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="portfolio-section portfolio-cta">
+    <div class="portfolio-cta__content" appAnimation="slide-up">
+      <p class="portfolio-section__eyebrow">
+        Your Project Could Be Next
+      </p>
+
+      <h2>
+        Have a product, business platform, or AI idea you want to build?
+      </h2>
+
+      <p>
+        Talk to our engineering team and let us define the right architecture,
+        technology, and delivery path for your project.
+      </p>
+
+      <a
+        routerLink="/contact"
+        class="portfolio-button portfolio-button--primary"
+      >
+        Start Your Project
+      </a>
+    </div>
+  </section>
+</div>

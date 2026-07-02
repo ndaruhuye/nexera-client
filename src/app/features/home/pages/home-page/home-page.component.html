@@ -1,0 +1,295 @@
+<div class="home-page">
+  <!-- Hero -->
+  <section class="home-hero">
+    <div class="home-hero__background"></div>
+
+    <div class="home-hero__content" [@fadeSlide]="currentIndex">
+      <div class="home-hero__logo-wrap" appAnimation="zoom-in">
+        <img
+          [src]="logoUrl$ | async"
+          alt="Nexera Group"
+          class="home-hero__logo"
+        />
+      </div>
+
+      <p class="home-hero__eyebrow" appAnimation="slide-up">
+        Software Engineering • DevOps • System Architecture
+      </p>
+
+      <h1 class="home-hero__title">
+        {{ heros[currentIndex].headline }}
+      </h1>
+
+      <p class="home-hero__subtitle">
+        {{ heros[currentIndex].subheadline }}
+      </p>
+
+      <div class="home-hero__actions">
+        <a
+          class="home-button home-button--primary"
+          [routerLink]="heros[currentIndex].primaryCtaLink"
+        >
+          {{ heros[currentIndex].primaryCtaText }}
+        </a>
+
+        <a
+          *ngIf="heros[currentIndex].secondaryCtaText"
+          class="home-button home-button--secondary"
+          [routerLink]="heros[currentIndex].secondaryCtaLink"
+        >
+          {{ heros[currentIndex].secondaryCtaText }}
+        </a>
+      </div>
+
+      <p class="home-hero__trust">
+        Trusted by startups and enterprises • Production-ready software • No shortcuts
+      </p>
+    </div>
+
+    <div class="home-hero__controls">
+      <button
+        type="button"
+        class="home-hero__arrow"
+        aria-label="Previous slide"
+        (click)="previousSlide()"
+      >
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+      </button>
+
+      <div class="home-hero__indicators" aria-label="Hero slide indicators">
+        <button
+          *ngFor="let slide of heros; let i = index"
+          type="button"
+          class="home-hero__indicator"
+          [class.home-hero__indicator--active]="i === currentIndex"
+          [attr.aria-label]="'Go to slide ' + (i + 1)"
+          (click)="goToSlide(i)"
+        ></button>
+      </div>
+
+      <button
+        type="button"
+        class="home-hero__arrow"
+        aria-label="Next slide"
+        (click)="nextSlide()"
+      >
+        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="home-section home-stats">
+    <article
+      *ngFor="let stat of stats; let i = index; trackBy: trackByTitle"
+      class="home-stat"
+      appAnimation="slide-up"
+      [appAnimationIndex]="i"
+      [appAnimationStep]="80"
+    >
+      <strong>{{ stat.value }}</strong>
+      <span>{{ stat.label }}</span>
+    </article>
+  </section>
+
+  <!-- About -->
+  <section class="home-section home-about">
+    <div class="home-section__header" appAnimation="slide-up">
+      <p class="home-section__eyebrow">About Nexera Group</p>
+      <h2 class="home-section__title">
+        We turn complex business needs into secure digital systems.
+      </h2>
+    </div>
+
+    <div class="home-about__grid">
+      <div class="home-about__content" appAnimation="slide-up">
+        <p>
+          At Nexera Group, we design and deliver high-quality software solutions
+          that are reliable, scalable, and secure from the ground up.
+        </p>
+
+        <p>
+          We work closely with startups, growing businesses, and established
+          enterprises, acting as a strategic technology partner rather than only
+          a service provider.
+        </p>
+
+        <p>
+          From product strategy and architecture to development, deployment, and
+          long-term support, we help transform ideas into digital products that
+          create measurable business value.
+        </p>
+      </div>
+
+      <div class="home-about__panel" appAnimation="slide-left">
+        <span>Our promise</span>
+        <h3>Build it right from the beginning.</h3>
+        <p>
+          Clean architecture, strong security, practical UX, and maintainable
+          code are not extras. They are part of how we work.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="home-section home-services">
+    <div class="home-section__header" appAnimation="slide-up">
+      <p class="home-section__eyebrow">Our Services</p>
+      <h2 class="home-section__title">
+        Engineering services for modern companies.
+      </h2>
+      <p class="home-section__subtitle">
+        We help teams build, modernize, deploy, and maintain software systems
+        with confidence.
+      </p>
+    </div>
+
+    <div class="home-card-grid">
+      <article
+        *ngFor="let service of services; let i = index; trackBy: trackByTitle"
+        class="home-card home-service-card"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="100"
+      >
+        <div class="home-card__icon">
+          <i [class]="service.icon" aria-hidden="true"></i>
+        </div>
+
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.description }}</p>
+
+        <a
+          [routerLink]="service.route"
+          [fragment]="service.fragment"
+          class="home-card__link"
+        >
+          Learn more
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <!-- Who We Help -->
+  <section class="home-section home-audiences">
+    <div class="home-section__header" appAnimation="slide-up">
+      <p class="home-section__eyebrow">Who We Help</p>
+      <h2 class="home-section__title">
+        Built for different stages of business growth.
+      </h2>
+    </div>
+
+    <div class="home-card-grid home-card-grid--three">
+      <article
+        *ngFor="let audience of audiences; let i = index; trackBy: trackByTitle"
+        class="home-card home-audience-card"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="100"
+      >
+        <h3>{{ audience.title }}</h3>
+        <p>{{ audience.description }}</p>
+
+        <ul>
+          <li *ngFor="let point of audience.points">
+            {{ point }}
+          </li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="home-section home-process">
+    <div class="home-section__header" appAnimation="slide-up">
+      <p class="home-section__eyebrow">How We Work</p>
+      <h2 class="home-section__title">
+        A clear process from idea to production.
+      </h2>
+    </div>
+
+    <div class="home-process__grid">
+      <article
+        *ngFor="let step of process; let i = index; trackBy: trackByTitle"
+        class="home-process__step"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="100"
+      >
+        <span>{{ step.step }}</span>
+        <h3>{{ step.title }}</h3>
+        <p>{{ step.description }}</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Technology Stack -->
+  <section class="home-section home-technologies">
+    <div class="home-section__header" appAnimation="slide-up">
+      <p class="home-section__eyebrow">Technology Stack</p>
+      <h2 class="home-section__title">
+        Proven technologies for scalable products.
+      </h2>
+      <p class="home-section__subtitle">
+        We choose practical, maintainable tools that fit your product and team.
+      </p>
+    </div>
+
+    <div class="home-tech-grid">
+      <article
+        *ngFor="let tech of technologies; let i = index; trackBy: trackByTitle"
+        class="home-tech-card"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="80"
+      >
+        <h3>{{ tech.category }}</h3>
+
+        <div class="home-tech-card__items">
+          <div
+            *ngFor="let item of tech.items; trackBy: trackByName"
+            class="home-tech-item"
+          >
+            <img *ngIf="item.icon" [src]="item.icon" [alt]="item.name" />
+            <span>{{ item.name }}</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Compliance -->
+  <section class="home-section home-compliance">
+    <div class="home-compliance__content" appAnimation="slide-up">
+      <p class="home-section__eyebrow">Compliance & Trust</p>
+      <h2 class="home-section__title">
+        We build with security, privacy, and reliability in mind.
+      </h2>
+      <p>
+        Our systems are designed with strong engineering practices, secure data
+        handling, and Rwanda’s data protection expectations in mind.
+      </p>
+    </div>
+
+    <div class="home-compliance__badge" appAnimation="zoom-in">
+      <img src="./images/dpo.png" alt="Data protection compliance" />
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="home-section home-cta">
+    <div class="home-cta__content" appAnimation="slide-up">
+      <p class="home-section__eyebrow">Start Your Project</p>
+      <h2>Let’s build your next product.</h2>
+      <p>
+        Talk to our engineers and get a clear path from idea to production.
+      </p>
+
+      <a routerLink="/contact" class="home-button home-button--primary">
+        Contact Us
+      </a>
+    </div>
+  </section>
+</div>

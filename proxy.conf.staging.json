@@ -1,0 +1,15 @@
+{
+  "/api": {
+    "target": "https://staging-api.nexeragroup.rw",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "info",
+    "ws": true,
+    "xfwd": true,
+    "timeout": 20000,
+    "proxyTimeout": 20000,
+    "headers": {
+      "X-Environment": "staging"
+    }
+  }
+}

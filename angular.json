@@ -43,6 +43,17 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environments.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -51,16 +62,35 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "1MB",
+                  "maximumError": "3MB"
                 }
               ],
               "outputHashing": "all"
             },
             "development": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environments.dev.ts"
+                }
+              ],
               "optimization": false,
+              "outputHashing": "none",
+              "namedChunks": true,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "staging": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environments.staging.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -69,10 +99,19 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "client:build:production"
+              "buildTarget": "client:build:production",
+              "port": 5500,
+              "proxyConfig": "proxy.conf.prod.json"
             },
             "development": {
-              "buildTarget": "client:build:development"
+              "buildTarget": "client:build:development",
+              "port": 4200,
+              "proxyConfig": "proxy.conf.dev.json"
+            },
+            "staging": {
+              "buildTarget": "client:build:staging",
+              "port": 4300,
+              "proxyConfig": "proxy.conf.staging.json"
             }
           },
           "defaultConfiguration": "development"
@@ -102,5 +141,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "f7497596-43fc-48d4-a549-2c0bea1c2bf5"
   }
 }

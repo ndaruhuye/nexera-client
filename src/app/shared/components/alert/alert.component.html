@@ -1,0 +1,55 @@
+<ng-container *ngIf="alert$ | async as alert">
+  <div
+    class="alerts-backdrop"
+    (click)="onBackdropClick(alert)"
+  >
+    <section
+      class="alerts-dialog"
+      [ngClass]="'alerts-dialog--' + alert.type"
+      role="alertdialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="'alert-title-' + alert.id"
+      [attr.aria-describedby]="'alert-message-' + alert.id"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="alerts-icon">
+        <i [ngClass]="alert.icon || getDefaultIcon(alert.type)"></i>
+      </div>
+
+      <div class="alerts-content">
+        <h2 class="alerts-title" [id]="'alert-title-' + alert.id">
+          {{ alert.title }}
+        </h2>
+
+        <p
+          *ngIf="alert.message"
+          class="alerts-message"
+          [id]="'alert-message-' + alert.id"
+        >
+          {{ alert.message }}
+        </p>
+      </div>
+
+      <!-- Buttons only visible for confirm alert -->
+      <div *ngIf="alert.type === 'confirm'" class="alerts-actions">
+        <app-button
+          variant="outline"
+          tone="secondary"
+          size="md"
+          (buttonClick)="cancel(alert)"
+        >
+          {{ alert.cancelText || 'Cancel' }}
+        </app-button>
+
+        <app-button
+          variant="solid"
+          [tone]="getButtonTone(alert.type)"
+          size="md"
+          (buttonClick)="confirm(alert)"
+        >
+          {{ alert.confirmText || 'Confirm' }}
+        </app-button>
+      </div>
+    </section>
+  </div>
+</ng-container>

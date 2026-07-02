@@ -1,0 +1,15 @@
+.light-theme {
+  --bg-color: var(--light-background);
+  --surface-color: var(--light-surface);
+  --title-color: var(--light-title);
+  --subtitle-color: var(--light-subtitle);
+  --text-color: var(--light-text);
+  --gray-color: var(--light-gray);
+  --menu-bg: var(--light-menu);
+  --shadow-bg: var(--light-shadow);
+  --modal-bg: var(--light-modal);
+
+  /* Navigation active state */
+  --nav-active-bg: #000000;
+  --nav-active-color: #ffffff;
+}

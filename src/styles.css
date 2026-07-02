@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Imports */
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+/* App Styles */
+@import "./styles/abstracts/variables.css";
+
+@import "./styles/themes/light-theme.css";
+@import "./styles/themes/dark-theme.css";
+
+@import "./styles/base/reset.css";
+@import "./styles/base/global.css";
+@import "./styles/base/typography.css";
+
+@import "./styles/media-queries.css";

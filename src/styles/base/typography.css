@@ -1,0 +1,30 @@
+.hero-title {
+  font-size: var(--font-hero);
+  font-weight: 900;
+}
+
+.page-title {
+  font-size: var(--font-page);
+}
+
+.section-title {
+  font-size: var(--font-section);
+}
+
+.subsection {
+  font-size: var(--font-subsection);
+}
+
+.medium-text {
+  font-size: var(--font-medium);
+}
+
+.small-text {
+  font-size: var(--font-small);
+}
+
+.overline {
+  font-size: var(--font-overline);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}

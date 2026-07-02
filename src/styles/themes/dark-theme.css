@@ -1,0 +1,15 @@
+.dark-theme {
+  --bg-color: var(--dark-background);
+  --surface-color: var(--dark-surface);
+  --title-color: var(--dark-title);
+  --subtitle-color: var(--dark-subtitle);
+  --text-color: var(--dark-text);
+  --gray-color: var(--dark-gray);
+  --menu-bg: var(--dark-menu);
+  --shadow-bg: var(--dark-shadow);
+  --modal-bg: var(--dark-modal);
+
+  /* Navigation active state */
+  --nav-active-bg: #ffffff;
+  --nav-active-color: #000000;
+}

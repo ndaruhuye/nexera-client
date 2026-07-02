@@ -1,0 +1,29 @@
+html,
+body {
+  background-color: var(--bg-color);
+  font-size: var(--font-body);
+  color: var(--text-color);
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
+
+body {
+  min-height: 100vh;
+  z-index: 1;
+}
+
+a {
+  cursor: pointer;
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.no-scroll {
+  overflow: hidden;
+}

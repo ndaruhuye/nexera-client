@@ -1,0 +1,360 @@
+<div class="contact-page">
+  <!-- Hero -->
+  <section class="contact-hero">
+    <div class="contact-hero__background"></div>
+
+    <div class="contact-hero__content" appAnimation="slide-up">
+      <p class="contact-section__eyebrow">
+        {{ hero.eyebrow }}
+      </p>
+
+      <h1 class="contact-hero__title">
+        {{ hero.title }}
+      </h1>
+
+      <p class="contact-hero__subtitle">
+        {{ hero.subtitle }}
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact methods -->
+  <section class="contact-section contact-methods">
+    <article
+      *ngFor="
+        let method of contactMethods;
+        let i = index;
+        trackBy: trackByTitle
+      "
+      class="contact-method"
+      appAnimation="slide-up"
+      [appAnimationIndex]="i"
+      [appAnimationStep]="80"
+    >
+      <div class="contact-method__icon">
+        <i [class]="method.icon" aria-hidden="true"></i>
+      </div>
+
+      <div class="contact-method__content">
+        <span>{{ method.title }}</span>
+
+        <a
+          [href]="method.href"
+          [attr.target]="method.href.startsWith('http') ? '_blank' : null"
+          [attr.rel]="
+            method.href.startsWith('http')
+              ? 'noopener noreferrer'
+              : null
+          "
+        >
+          {{ method.value }}
+        </a>
+
+        <p>{{ method.description }}</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- Form and business information -->
+  <section class="contact-section contact-main">
+    <div class="contact-form-panel" appAnimation="slide-up">
+      <div class="contact-form-panel__header">
+        <p class="contact-section__eyebrow">
+          Project Enquiry
+        </p>
+
+        <h2>
+          Tell us about your project.
+        </h2>
+
+        <p>
+          Complete the form below with as much information as possible. We will
+          review your request and contact you to discuss the next steps.
+        </p>
+      </div>
+
+      <form
+        class="contact-form"
+        [formGroup]="contactForm"
+        (ngSubmit)="submit()"
+        novalidate
+      >
+        <div class="contact-form__grid">
+          <app-input
+            label="Full name"
+            placeholder="Enter your full name"
+            formControlName="name"
+            [required]="true"
+            autocomplete="name"
+            leftIcon="fa-regular fa-user"
+            [errorMessages]="{
+              required: 'Your full name is required.',
+              minlength: 'Your name must contain at least 2 characters.',
+              maxlength: 'Your name cannot exceed 80 characters.'
+            }"
+          ></app-input>
+
+          <app-input
+            label="Email address"
+            placeholder="you@example.com"
+            type="email"
+            formControlName="email"
+            [required]="true"
+            autocomplete="email"
+            inputmode="email"
+            leftIcon="fa-regular fa-envelope"
+            [errorMessages]="{
+              required: 'Your email address is required.',
+              email: 'Enter a valid email address.',
+              maxlength: 'Your email address is too long.'
+            }"
+          ></app-input>
+
+          <app-input
+            label="Phone number"
+            placeholder="+250 ..."
+            type="tel"
+            formControlName="phone"
+            autocomplete="tel"
+            inputmode="tel"
+            leftIcon="fa-solid fa-phone"
+          ></app-input>
+
+          <app-input
+            label="Company or organization"
+            placeholder="Enter company name"
+            formControlName="company"
+            autocomplete="organization"
+            leftIcon="fa-regular fa-building"
+          ></app-input>
+        </div>
+
+        <div class="contact-form__grid">
+          <div class="contact-field">
+            <label for="service">
+              Service required
+              <span>*</span>
+            </label>
+
+            <div class="contact-select-wrapper">
+              <select
+                id="service"
+                formControlName="service"
+                [class.contact-field__control--error]="
+                  contactForm.controls['service'].invalid &&
+                  (
+                    contactForm.controls['service'].touched ||
+                    contactForm.controls['service'].dirty
+                  )
+                "
+              >
+                <option
+                  *ngFor="
+                    let service of serviceOptions;
+                    trackBy: trackByLabel
+                  "
+                  [value]="service.value"
+                >
+                  {{ service.label }}
+                </option>
+              </select>
+
+              <i
+                class="fa-solid fa-angle-down"
+                aria-hidden="true"
+              ></i>
+            </div>
+
+            <p
+              *ngIf="
+                contactForm.controls['service'].hasError('required') &&
+                (
+                  contactForm.controls['service'].touched ||
+                  contactForm.controls['service'].dirty
+                )
+              "
+              class="contact-field__error"
+            >
+              Please select the service you need.
+            </p>
+          </div>
+
+          <div class="contact-field">
+            <label for="budget">
+              Estimated budget
+            </label>
+
+            <div class="contact-select-wrapper">
+              <select
+                id="budget"
+                formControlName="budget"
+              >
+                <option
+                  *ngFor="
+                    let budget of budgetOptions;
+                    trackBy: trackByLabel
+                  "
+                  [value]="budget.value"
+                >
+                  {{ budget.label }}
+                </option>
+              </select>
+
+              <i
+                class="fa-solid fa-angle-down"
+                aria-hidden="true"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <app-input
+          label="Project details"
+          placeholder="Describe your project, goals, required features, current challenges, and preferred timeline..."
+          type="textarea"
+          formControlName="message"
+          [rows]="8"
+          [required]="true"
+          [minLength]="20"
+          [maxLength]="2000"
+          [errorMessages]="{
+            required: 'Please provide information about your project.',
+            minlength: 'Please provide at least 20 characters.',
+            maxlength: 'Your message cannot exceed 2,000 characters.'
+          }"
+        ></app-input>
+
+        <div class="contact-form__footer">
+          <p>
+            By submitting this form, you agree that Nexera Group may contact
+            you regarding your enquiry.
+          </p>
+
+          <app-button
+            variant="solid"
+            tone="primary"
+            size="lg"
+            htmlType="submit"
+            [loading]="submitting"
+            [disabled]="contactForm.invalid"
+            rightIcon="fa-solid fa-arrow-right"
+          >
+            Send Message
+          </app-button>
+        </div>
+      </form>
+    </div>
+
+    <aside class="contact-business" appAnimation="slide-left">
+      <p class="contact-section__eyebrow">
+        Work With Us
+      </p>
+
+      <h2>
+        Start with a clear technical conversation.
+      </h2>
+
+      <p class="contact-business__description">
+        You do not need to have every technical detail prepared. Share the
+        business problem, the users you want to support, and the result you
+        want to achieve.
+      </p>
+
+      <div class="contact-business__details">
+        <div>
+          <span>Response time</span>
+          <strong>Within 1–2 business days</strong>
+        </div>
+
+        <div>
+          <span>Working location</span>
+          <strong>Kigali, Rwanda</strong>
+        </div>
+
+        <div>
+          <span>Project availability</span>
+          <strong>Rwanda and international</strong>
+        </div>
+      </div>
+
+      <div *ngIf="socialLinks.length" class="contact-business__social">
+        <span>Connect with us</span>
+
+        <div>
+          <a
+            *ngFor="let social of socialLinks; trackBy: trackByLabel"
+            [href]="social.href"
+            target="_blank"
+            rel="noopener noreferrer"
+            [attr.aria-label]="social.label"
+          >
+            <i [class]="social.icon" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Process -->
+  <section class="contact-section contact-process">
+    <div class="contact-section__header" appAnimation="slide-up">
+      <p class="contact-section__eyebrow">
+        What Happens Next
+      </p>
+
+      <h2 class="contact-section__title">
+        A clear process from first conversation to project delivery.
+      </h2>
+
+      <p class="contact-section__subtitle">
+        We begin by understanding what you need before recommending
+        technologies, estimating cost, or defining a delivery plan.
+      </p>
+    </div>
+
+    <div class="contact-process__grid">
+      <article
+        *ngFor="
+          let step of steps;
+          let i = index;
+          trackBy: trackByTitle
+        "
+        class="contact-process__step"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="100"
+      >
+        <span>{{ step.number }}</span>
+        <h3>{{ step.title }}</h3>
+        <p>{{ step.description }}</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Direct CTA -->
+  <section class="contact-section contact-cta">
+    <div class="contact-cta__content" appAnimation="slide-up">
+      <p class="contact-section__eyebrow">
+        Prefer a Direct Conversation?
+      </p>
+
+      <h2>
+        Contact us directly through WhatsApp.
+      </h2>
+
+      <p>
+        Start a quick conversation with our team and tell us what you are
+        planning to build.
+      </p>
+
+      <a
+        class="contact-button contact-button--primary"
+        href="https://wa.me/250788717923"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Chat on WhatsApp
+      </a>
+    </div>
+  </section>
+</div>

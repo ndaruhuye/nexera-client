@@ -1,0 +1,247 @@
+.app-button {
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 700;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--button-gap);
+  text-transform: capitalize;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ==================== Sizes ==================== */
+
+.app-button--sm {
+  min-height: 36px;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+}
+
+.app-button--md {
+  min-height: 44px;
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+}
+
+.app-button--lg {
+  min-height: 52px;
+  padding: 0.875rem 1.5rem;
+  font-size: 1.0625rem;
+}
+
+/* ==================== Layout ==================== */
+
+.app-button--block {
+  width: 100%;
+}
+
+.app-button__content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* ==================== Primary ==================== */
+
+.app-button--solid.app-button--primary {
+  background-color: #2b7fff;
+  color: #ffffff;
+}
+
+.app-button--outline.app-button--primary {
+  background-color: transparent;
+  border: 2px solid rgba(43, 127, 255, 0.5);
+  color: #2b7fff;
+}
+
+.app-button--soft.app-button--primary {
+  background-color: rgba(43, 127, 255, 0.1);
+  color: #2b7fff;
+}
+
+.app-button--subtle.app-button--primary {
+  background-color: rgba(43, 127, 255, 0.1);
+  border: 2px solid rgba(43, 127, 255, 0.5);
+  color: #2b7fff;
+}
+
+.app-button--ghost.app-button--primary {
+  background-color: transparent;
+  color: #2b7fff;
+}
+
+/* ==================== Secondary ==================== */
+
+.app-button--solid.app-button--secondary {
+  background-color: rgb(230, 230, 230);
+  color: #000000;
+}
+
+.app-button--outline.app-button--secondary {
+  background-color: transparent;
+  border: 2px solid rgb(230, 230, 230);
+  color: var(--text-color);
+}
+
+.app-button--soft.app-button--secondary {
+  background-color: rgba(230, 230, 230, 0.5);
+  color: #000000;
+}
+
+.app-button--subtle.app-button--secondary {
+  background-color: rgba(230, 230, 230, 0.1);
+  border: 2px solid rgba(230, 230, 230, 0.5);
+  color: var(--text-color);
+}
+
+.app-button--ghost.app-button--secondary {
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+/* ==================== Success ==================== */
+
+.app-button--solid.app-button--success {
+  background-color: rgb(0, 193, 106);
+  color: #ffffff;
+}
+
+.app-button--outline.app-button--success {
+  background-color: transparent;
+  border: 2px solid rgba(0, 193, 106, 0.5);
+  color: rgb(0, 193, 106);
+}
+
+.app-button--soft.app-button--success {
+  background-color: rgba(0, 193, 106, 0.1);
+  color: rgb(0, 193, 106);
+}
+
+.app-button--subtle.app-button--success {
+  background-color: rgba(0, 193, 106, 0.1);
+  border: 2px solid rgba(0, 193, 106, 0.5);
+  color: rgb(0, 193, 106);
+}
+
+.app-button--ghost.app-button--success {
+  background-color: transparent;
+  color: rgb(0, 193, 106);
+}
+
+/* ==================== Warning ==================== */
+
+.app-button--solid.app-button--warning {
+  background-color: rgb(239, 177, 0);
+  color: #ffffff;
+}
+
+.app-button--outline.app-button--warning {
+  background-color: transparent;
+  border: 2px solid rgba(239, 177, 0, 0.5);
+  color: rgb(239, 177, 0);
+}
+
+.app-button--soft.app-button--warning {
+  background-color: rgba(239, 177, 0, 0.1);
+  color: rgb(239, 177, 0);
+}
+
+.app-button--subtle.app-button--warning {
+  background-color: rgba(239, 177, 0, 0.1);
+  border: 2px solid rgba(239, 177, 0, 0.5);
+  color: rgb(239, 177, 0);
+}
+
+.app-button--ghost.app-button--warning {
+  background-color: transparent;
+  color: rgb(239, 177, 0);
+}
+
+/* ==================== Danger ==================== */
+
+.app-button--solid.app-button--danger {
+  background-color: rgb(251, 44, 54);
+  color: #ffffff;
+}
+
+.app-button--outline.app-button--danger {
+  background-color: transparent;
+  border: 2px solid rgba(251, 44, 54, 0.5);
+  color: rgb(251, 44, 54);
+}
+
+.app-button--soft.app-button--danger {
+  background-color: rgba(251, 44, 54, 0.1);
+  color: rgb(251, 44, 54);
+}
+
+.app-button--subtle.app-button--danger {
+  background-color: rgba(251, 44, 54, 0.1);
+  border: 2px solid rgba(251, 44, 54, 0.5);
+  color: rgb(251, 44, 54);
+}
+
+.app-button--ghost.app-button--danger {
+  background-color: transparent;
+  color: rgb(251, 44, 54);
+}
+
+/* ==================== States ==================== */
+
+.app-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.app-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.app-button:disabled,
+.app-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+}
+
+.app-button:focus-visible {
+  outline: 3px solid rgba(43, 127, 255, 0.35);
+  outline-offset: 2px;
+}
+
+/* ==================== Loading ==================== */
+
+.app-button--loading {
+  pointer-events: none;
+}
+
+.app-button__spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: app-button-spin 0.75s linear infinite;
+}
+
+@keyframes app-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

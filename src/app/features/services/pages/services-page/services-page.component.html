@@ -1,0 +1,217 @@
+<div class="services-page">
+  <!-- Hero -->
+  <section class="services-hero">
+    <div class="services-hero__background"></div>
+
+    <div class="services-hero__content" appAnimation="slide-up">
+      <p class="services-section__eyebrow">
+        Nexera Group Services
+      </p>
+
+      <h1 class="services-hero__title">
+        {{ hero.title }}
+      </h1>
+
+      <p class="services-hero__subtitle">
+        {{ hero.subtitle }}
+      </p>
+
+      <div class="services-hero__actions">
+        <a
+          class="services-button services-button--primary"
+          [routerLink]="hero.ctaPrimaryLink"
+        >
+          {{ hero.ctaPrimary }}
+        </a>
+
+        <a
+          class="services-button services-button--secondary"
+          [routerLink]="hero.ctaSecondaryLink"
+        >
+          {{ hero.ctaSecondary }}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlights -->
+  <section class="services-section services-highlights">
+    <article
+      *ngFor="let highlight of highlights; let i = index; trackBy: trackByTitle"
+      class="services-highlight"
+      appAnimation="slide-up"
+      [appAnimationIndex]="i"
+      [appAnimationStep]="80"
+    >
+      <strong>{{ highlight.value }}</strong>
+      <span>{{ highlight.label }}</span>
+    </article>
+  </section>
+
+  <!-- Intro -->
+  <section class="services-section services-intro">
+    <div class="services-section__header" appAnimation="slide-up">
+      <p class="services-section__eyebrow">
+        What We Do
+      </p>
+
+      <h2 class="services-section__title">
+        We help companies build software that is reliable, secure, and ready for growth.
+      </h2>
+
+      <p class="services-section__subtitle">
+        Whether you need a new product, a better internal system, an AI-powered tool,
+        DevOps automation, or long-term technical support, we provide the engineering
+        expertise needed to move from idea to production.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="service-list" class="services-section services-list">
+    <article
+      *ngFor="let service of services; let serviceIndex = index; trackBy: trackByTitle"
+      class="service-block"
+      [id]="service.id"
+      appAnimation="slide-up"
+      [appAnimationIndex]="serviceIndex"
+      [appAnimationStep]="80"
+    >
+      <div class="service-block__header">
+        <div class="service-block__icon">
+          <i [class]="service.icon" aria-hidden="true"></i>
+        </div>
+
+        <div>
+          <p class="service-block__label">
+            {{ service.label }}
+          </p>
+
+          <h2>
+            {{ service.title }}
+          </h2>
+
+          <p>
+            {{ service.description }}
+          </p>
+        </div>
+      </div>
+
+      <div class="service-block__cards">
+        <article
+          *ngFor="let card of service.cards; let i = index; trackBy: trackByTitle"
+          class="service-card"
+          appAnimation="slide-up"
+          [appAnimationIndex]="i"
+          [appAnimationStep]="80"
+        >
+          <span class="service-card__number">
+            {{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}
+          </span>
+
+          <h3>
+            {{ card.title }}
+          </h3>
+
+          <p>
+            {{ card.description }}
+          </p>
+        </article>
+      </div>
+    </article>
+  </section>
+
+  <!-- Process -->
+  <section class="services-section services-process">
+    <div class="services-section__header" appAnimation="slide-up">
+      <p class="services-section__eyebrow">
+        Our Process
+      </p>
+
+      <h2 class="services-section__title">
+        A clear path from idea to production.
+      </h2>
+
+      <p class="services-section__subtitle">
+        We follow a practical engineering process that keeps your project clear,
+        measurable, and ready for real users.
+      </p>
+    </div>
+
+    <div class="services-process__grid">
+      <article
+        *ngFor="let step of process; let i = index; trackBy: trackByTitle"
+        class="services-process__step"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="80"
+      >
+        <span>{{ step.step }}</span>
+        <h3>{{ step.title }}</h3>
+        <p>{{ step.description }}</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Engagement Models -->
+  <section class="services-section services-engagement">
+    <div class="services-section__header" appAnimation="slide-up">
+      <p class="services-section__eyebrow">
+        Engagement Models
+      </p>
+
+      <h2 class="services-section__title">
+        Flexible ways to work with us.
+      </h2>
+
+      <p class="services-section__subtitle">
+        Choose the model that fits your current stage, budget, and technical needs.
+      </p>
+    </div>
+
+    <div class="services-engagement__grid">
+      <article
+        *ngFor="let model of engagementModels; let i = index; trackBy: trackByTitle"
+        class="services-engagement__card"
+        appAnimation="slide-up"
+        [appAnimationIndex]="i"
+        [appAnimationStep]="100"
+      >
+        <h3>{{ model.title }}</h3>
+
+        <p>{{ model.description }}</p>
+
+        <ul>
+          <li *ngFor="let point of model.points">
+            {{ point }}
+          </li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="services-section services-cta">
+    <div class="services-cta__content" appAnimation="slide-up">
+      <p class="services-section__eyebrow">
+        Ready to Build?
+      </p>
+
+      <h2>
+        Ready to build or improve your software?
+      </h2>
+
+      <p>
+        Let’s discuss your project, identify the best technical path, and turn
+        your idea into a reliable production system.
+      </p>
+
+      <a
+        class="services-button services-button--primary"
+        routerLink="/contact"
+      >
+        Talk to an Engineer
+      </a>
+    </div>
+  </section>
+</div>

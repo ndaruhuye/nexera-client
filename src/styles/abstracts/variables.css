@@ -1,0 +1,49 @@
+:root {
+  /* Light Theme */
+  --light-background: rgb(255, 255, 255);
+  --light-text: rgb(0, 0, 0);
+  --light-gray: rgb(50, 50, 50);
+  --light-title: rgb(0, 0, 255);
+  --light-subtitle: rgb(0, 0, 0);
+  --light-surface: rgb(240, 240, 240);
+  --light-menu: rgba(0, 0, 0, 0.1);
+  --light-shadow: rgba(0, 0, 0, 0.05);
+  --light-modal: rgb(255, 255, 255);
+
+  /* Dark Theme */
+  --dark-background: rgb(10, 10, 10);
+  --dark-text: rgb(255, 255, 255);
+  --dark-gray: rgb(200, 200, 200);
+  --dark-title: rgb(0, 0, 255);
+  --dark-subtitle: rgb(255, 255, 255);
+  --dark-surface: rgb(50, 50, 50);
+  --dark-menu: rgb(20, 20, 20);
+  --dark-shadow: rgba(255, 255, 255, 0.05);
+  --dark-modal: rgb(0, 0, 0);
+
+  /* Active Theme Fallback */
+  --bg-color: var(--light-background);
+  --surface-color: var(--light-surface);
+  --title-color: var(--light-title);
+  --subtitle-color: var(--light-subtitle);
+  --text-color: var(--light-text);
+  --gray-color: var(--light-gray);
+  --menu-bg: var(--light-menu);
+  --shadow-bg: var(--light-shadow);
+  --modal-bg: var(--light-modal);
+
+  /* Font Sizes */
+  --font-body: 1rem;
+  --font-hero: 2rem;
+  --font-page: 1.5rem;
+  --font-section: 1.25rem;
+  --font-subsection: 1.125rem;
+  --font-medium: 1rem;
+  --font-small: 0.875rem;
+  --font-overline: 0.75rem;
+
+  /* Button Defaults */
+  --button-font-size: 1rem;
+  --button-padding: 1rem 1rem;
+  --button-gap: 8px;
+}
