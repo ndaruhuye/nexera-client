@@ -1,12 +1,34 @@
 services:
   client:
+    # Build the image using the Dockerfile in the current directory.
     build:
       context: .
       dockerfile: Dockerfile
+
+    # Name and tag assigned to the generated Docker image.
     image: nexera-group-client:latest
+
+    # Predictable name assigned to the running container.
+    container_name: nexera-group-client
+
+    # Publish the container port on the Ubuntu server.
+    #
+    # Format:
+    # HOST_PORT:CONTAINER_PORT
+    #
+    # Default mapping:
+    # Ubuntu server port 8080 -> container port 3000
+    #
+    # Because no 127.0.0.1 address is specified, Docker listens on
+    # the server's available network interfaces, including its public IP.
     ports:
-      - "${HOST_PORT:-8080}:${PORT:-80}"
+      - "${HOST_PORT:-8080}:${PORT:-3000}"
+
+    # Environment variables passed into the running container.
     environment:
-      PORT: ${PORT:-80}
-      API_UPSTREAM: ${API_UPSTREAM:-https://api.nexeragroup.rw}
+      # Port used by the Node static server and Docker health check.
+      PORT: ${PORT:-3000}
+
+    # Automatically restart after crashes or server restarts,
+    # unless the container was manually stopped.
     restart: unless-stopped

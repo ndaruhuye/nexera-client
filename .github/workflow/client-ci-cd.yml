@@ -1,0 +1,241 @@
+name: Nexera Client CI/CD
+
+# =============================================================================
+# WORKFLOW TRIGGERS
+# =============================================================================
+
+on:
+  # Run CI when a pull request targets the main branch.
+  pull_request:
+    branches:
+      - main
+
+  # Run CI and deployment when code is pushed or merged into main.
+  push:
+    branches:
+      - main
+
+  # Allow the workflow to be started manually from GitHub Actions.
+  workflow_dispatch:
+
+# Prevent multiple production deployments from running simultaneously.
+concurrency:
+  group: nexera-client-production
+  cancel-in-progress: false
+
+# Permissions granted to the workflow's built-in GITHUB_TOKEN.
+permissions:
+  # Required for checking out the repository.
+  contents: read
+
+  # Required for publishing Docker images to GHCR.
+  packages: write
+
+jobs:
+  # ===========================================================================
+  # CI JOB
+  #
+  # Builds the Docker image.
+  #
+  # Your Dockerfile already runs:
+  # - pnpm install --frozen-lockfile
+  # - pnpm run verify
+  # - pnpm run build:prod
+  #
+  # Therefore, if verification or the Angular build fails, this job fails.
+  # ===========================================================================
+
+  build:
+    name: Verify and build image
+    runs-on: ubuntu-latest
+
+    # Make the image name and tag available to the deploy job.
+    outputs:
+      image-name: ${{ steps.image.outputs.name }}
+      image-tag: ${{ steps.image.outputs.tag }}
+
+    steps:
+      # Download the repository into the GitHub Actions runner.
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      # Generate the GHCR image name and immutable Git commit tag.
+      #
+      # Example image:
+      # ghcr.io/nexera-group/nexera-client
+      #
+      # Example tag:
+      # sha-8f73d85d...
+      - name: Generate image metadata
+        id: image
+        shell: bash
+        run: |
+          IMAGE_NAME="ghcr.io/${GITHUB_REPOSITORY,,}"
+          IMAGE_TAG="sha-${GITHUB_SHA}"
+
+          echo "name=${IMAGE_NAME}" >> "${GITHUB_OUTPUT}"
+          echo "tag=${IMAGE_TAG}" >> "${GITHUB_OUTPUT}"
+
+          echo "Image name: ${IMAGE_NAME}"
+          echo "Image tag: ${IMAGE_TAG}"
+
+      # Configure Docker Buildx for efficient BuildKit builds and caching.
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      # Authenticate to GitHub Container Registry.
+      #
+      # Pull requests only test the build, so they do not need registry login.
+      - name: Log in to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build the application using your Dockerfile.
+      #
+      # For pull requests:
+      # - Build and verify the image
+      # - Do not publish it
+      #
+      # For pushes to main:
+      # - Build and verify the image
+      # - Publish the commit-specific tag
+      # - Publish the latest tag
+      - name: Build and publish Docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ./Dockerfile
+
+          # Do not push images for pull-request builds.
+          push: ${{ github.event_name != 'pull_request' }}
+
+          tags: |
+            ${{ steps.image.outputs.name }}:${{ steps.image.outputs.tag }}
+            ${{ steps.image.outputs.name }}:latest
+
+          # Reuse Docker build layers between workflow runs.
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # ===========================================================================
+  # CD JOB
+  #
+  # Connects to the Ubuntu server after a successful build.
+  # It uploads compose.prod.yml and deploy.sh, then deploys the exact image
+  # generated from the current Git commit.
+  # ===========================================================================
+
+  deploy:
+    name: Deploy to Ubuntu server
+
+    # Wait until the image has been successfully built and published.
+    needs:
+      - build
+
+    # Never deploy pull requests.
+    #
+    # Deploy only when the workflow is running against the main branch.
+    if: >
+      github.event_name != 'pull_request' &&
+      github.ref == 'refs/heads/main'
+
+    runs-on: ubuntu-latest
+
+    # Use secrets and variables from the GitHub production environment.
+    environment:
+      name: production
+
+    permissions:
+      contents: read
+
+    steps:
+      # Checkout is needed because compose.prod.yml and scripts/deploy.sh
+      # must be copied to the Ubuntu server.
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      # Create the SSH configuration used to connect to the server.
+      - name: Configure SSH
+        shell: bash
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.PROD_SSH_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d "${HOME}/.ssh"
+
+          printf '%s\n' "${SSH_PRIVATE_KEY}" \
+            > "${HOME}/.ssh/id_ed25519"
+
+          chmod 600 "${HOME}/.ssh/id_ed25519"
+
+          printf '%s\n' "${SSH_KNOWN_HOSTS}" \
+            > "${HOME}/.ssh/known_hosts"
+
+          chmod 600 "${HOME}/.ssh/known_hosts"
+
+      # Ensure the deployment directory exists on the Ubuntu server.
+      - name: Prepare server deployment directory
+        shell: bash
+        env:
+          SERVER_HOST: ${{ secrets.PROD_HOST }}
+          SERVER_USER: ${{ secrets.PROD_USER }}
+          SERVER_PORT: ${{ vars.PROD_SSH_PORT }}
+          DEPLOY_PATH: ${{ vars.PROD_DEPLOY_PATH }}
+        run: |
+          SERVER_PORT="${SERVER_PORT:-22}"
+          DEPLOY_PATH="${DEPLOY_PATH:-/opt/nexera-group-client}"
+
+          ssh \
+            -o StrictHostKeyChecking=yes \
+            -p "${SERVER_PORT}" \
+            "${SERVER_USER}@${SERVER_HOST}" \
+            "mkdir -p '${DEPLOY_PATH}'"
+
+      # Copy only the production Compose file and deployment script.
+      #
+      # The Angular source code is not copied because it is already compiled
+      # inside the Docker image.
+      - name: Upload deployment files
+        shell: bash
+        env:
+          SERVER_HOST: ${{ secrets.PROD_HOST }}
+          SERVER_USER: ${{ secrets.PROD_USER }}
+          SERVER_PORT: ${{ vars.PROD_SSH_PORT }}
+          DEPLOY_PATH: ${{ vars.PROD_DEPLOY_PATH }}
+        run: |
+          SERVER_PORT="${SERVER_PORT:-22}"
+          DEPLOY_PATH="${DEPLOY_PATH:-/opt/nexera-group-client}"
+
+          scp \
+            -o StrictHostKeyChecking=yes \
+            -P "${SERVER_PORT}" \
+            compose.prod.yml \
+            scripts/deploy.sh \
+            "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_PATH}/"
+
+      # Execute deploy.sh using the exact Docker image generated by the
+      # successful build job.
+      - name: Deploy Docker image
+        shell: bash
+        env:
+          SERVER_HOST: ${{ secrets.PROD_HOST }}
+          SERVER_USER: ${{ secrets.PROD_USER }}
+          SERVER_PORT: ${{ vars.PROD_SSH_PORT }}
+          DEPLOY_PATH: ${{ vars.PROD_DEPLOY_PATH }}
+          IMAGE_NAME: ${{ needs.build.outputs.image-name }}
+          IMAGE_TAG: ${{ needs.build.outputs.image-tag }}
+        run: |
+          SERVER_PORT="${SERVER_PORT:-22}"
+          DEPLOY_PATH="${DEPLOY_PATH:-/opt/nexera-group-client}"
+
+          ssh \
+            -o StrictHostKeyChecking=yes \
+            -p "${SERVER_PORT}" \
+            "${SERVER_USER}@${SERVER_HOST}" \
+            "cd '${DEPLOY_PATH}' &&
+             chmod +x deploy.sh &&
+             ./deploy.sh '${IMAGE_NAME}' '${IMAGE_TAG}'"
