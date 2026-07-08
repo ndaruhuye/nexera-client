@@ -16,7 +16,8 @@ ENV PNPM_HOME="/pnpm"
 # Add PNPM to the executable search path.
 ENV PATH="$PNPM_HOME:$PATH"
 
-# Enable package managers such as PNPM through Node Corepack.
+# Enable Corepack and activate the exact PNPM version declared
+# in package.json under the "packageManager" property.
 RUN corepack enable
 
 # Copy dependency files separately to improve Docker layer caching.
