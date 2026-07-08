@@ -19,12 +19,15 @@ IMAGE_NAME="${1:?Docker image name is required}"
 # sha-9d9f683b...
 IMAGE_TAG="${2:?Docker image tag is required}"
 
-# Resolve the directory containing this script.
+# Resolve the directory where deploy.sh itself is located.
 #
-# This allows the deployment directory to be changed without modifying
-# the script.
+# GitHub Actions uploads deploy.sh directly into:
+# /opt/nexera-group-client/deploy.sh
+#
+# Therefore, the deployment directory must be:
+# /opt/nexera-group-client
 DEPLOY_DIR="$(
-  cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." >/dev/null 2>&1
+  cd -- "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null 2>&1
   pwd
 )"
 
