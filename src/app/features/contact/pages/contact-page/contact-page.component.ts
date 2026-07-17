@@ -34,9 +34,9 @@ export class ContactPageComponent {
   readonly contactMethods: ContactMethod[] = [
     {
       title: 'Email',
-      value: 'nexeragroup@gmail.com',
+      value: 'nexeragrouprwanda@gmail.com',
       description: 'Send us your project requirements or questions.',
-      href: 'mailto:nexeragroup@gmail.com',
+      href: 'mailto:nexeragrouprwanda@gmail.com',
       icon: 'fa-regular fa-envelope',
     },
     {

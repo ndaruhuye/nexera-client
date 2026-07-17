@@ -51,9 +51,9 @@ export class FooterComponent {
   contacts: FooterContact[] = [
     {
       name: 'Email',
-      label: 'nexeragroup@gmail.com',
+      label: 'nexeragrouprwanda@gmail.com',
       icon: 'fa-regular fa-envelope',
-      href: 'mailto:nexeragroup@gmail.com',
+      href: 'mailto:nexeragrouprwanda@gmail.com',
     },
     {
       name: 'Phone',
