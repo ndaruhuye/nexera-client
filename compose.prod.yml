@@ -16,8 +16,10 @@ services:
     # Later, when host Nginx is configured, change HOST_BIND to:
     #
     # HOST_BIND=127.0.0.1
+    # ports:
+    #   - "${HOST_BIND:-127.0.0.1}:${HOST_PORT:-8080}:${PORT:-3000}"
     ports:
-      - "${HOST_BIND:-127.0.0.1}:${HOST_PORT:-8080}:${PORT:-3000}"
+      - "127.0.0.1:8080:3000"
 
     environment:
       # Must match the Dockerfile runtime port.
