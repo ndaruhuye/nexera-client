@@ -8,7 +8,6 @@ import {
   ServiceOption,
   BudgetOption,
   ContactStep,
-  ContactMessage,
 } from '../../interfaces/contact.interface';
 import { ContactService } from '../../services/contact.service';
 
@@ -22,7 +21,7 @@ import { ContactService } from '../../services/contact.service';
 export class ContactPageComponent {
   readonly contactForm: FormGroup;
 
-  submitting = false;
+  isSubmitting = false;
 
   readonly hero = {
     eyebrow: 'Contact Nexera Group',
@@ -177,7 +176,7 @@ export class ContactPageComponent {
     private readonly alertService: AlertService,
   ) {
     this.contactForm = this.formBuilder.group({
-      name: [
+      names: [
         '',
         [
           Validators.required,
@@ -205,40 +204,43 @@ export class ContactPageComponent {
   }
 
   submit(): void {
-    if (this.contactForm.invalid || this.submitting) {
+    if (this.contactForm.invalid || this.isSubmitting) {
       this.contactForm.markAllAsTouched();
-
-      this.alertService.warning({
-        title: 'Check the form',
-        message:
-          'Please complete all required fields before sending your message.',
-      });
-
       return;
     }
 
-    const payload = this.contactForm.getRawValue() as ContactMessage;
+    const formValue = this.contactForm.getRawValue();
 
-    this.submitting = true;
+    const inquiry = {
+      names: formValue.names.trim(),
+      email: formValue.email.trim(),
+      phone: formValue.phone?.trim() || undefined,
+      company: formValue.company?.trim() || undefined,
+      service: formValue.service,
+      budget: formValue.budget || undefined,
+      projectDetails: formValue.message.trim(),
+    };
+
+    this.isSubmitting = true;
 
     this.contactService
-      .sendMessage(payload)
+      .submitInquiry(inquiry)
       .pipe(
         finalize(() => {
-          this.submitting = false;
+          this.isSubmitting = false;
         }),
       )
       .subscribe({
         next: (response) => {
           this.alertService.success({
-            title: 'Message sent',
+            title: 'Inquiry sent',
             message:
-              response.message ||
-              'Thank you for contacting Nexera Group. We will respond shortly.',
+              response.message ??
+              'Thank you. Your inquiry has been sent successfully.',
           });
 
           this.contactForm.reset({
-            name: '',
+            names: '',
             email: '',
             phone: '',
             company: '',
@@ -247,14 +249,42 @@ export class ContactPageComponent {
             message: '',
           });
         },
-        error: () => {
+        error: (error: unknown) => {
+          this.isSubmitting = false;
           this.alertService.error({
-            title: 'Message not sent',
-            message:
-              'We could not send your message. Please try again or contact us directly by email or WhatsApp.',
+            title: 'Unable to send inquiry',
+            message: this.getErrorMessage(error),
           });
         },
       });
+  }
+
+  private getErrorMessage(error: unknown): string {
+    if (typeof error === 'object' && error !== null && 'error' in error) {
+      const responseError = error.error;
+
+      if (
+        typeof responseError === 'object' &&
+        responseError !== null &&
+        'message' in responseError
+      ) {
+        const message = responseError.message;
+
+        if (Array.isArray(message)) {
+          return message.join(' ');
+        }
+
+        if (typeof message === 'string') {
+          return message;
+        }
+      }
+    }
+
+    if (error instanceof Error) {
+      return error.message;
+    }
+
+    return 'Your inquiry could not be sent. Please try again.';
   }
 
   trackByTitle(_: number, item: ContactMethod | ContactStep): string {

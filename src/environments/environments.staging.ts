@@ -3,7 +3,7 @@ export const environment = {
   envName: 'staging',
 
   api: {
-    baseUrl: '/api',
+    url: '/api',
     version: 'v1',
     timeout: 20000,
   },

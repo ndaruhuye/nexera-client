@@ -1,21 +1,21 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import {
-  ContactMessage,
-  ContactResponse,
+  ContactInquiry,
+  ContactInquiryResponse,
 } from '../interfaces/contact.interface';
+import { HttpService } from '../../../core/service/http.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ContactService {
-  private readonly endpoint = `${environment.api.baseUrl.replace(/\/$/, '')}/contact`;
+export class ContactService extends HttpService {
+  private readonly endpoint = `${environment.api.url}/${environment.api.version}/inquiries`;
 
-  constructor(private readonly http: HttpClient) {}
-
-  sendMessage(payload: ContactMessage): Observable<ContactResponse> {
-    return this.http.post<ContactResponse>(this.endpoint, payload);
+  submitInquiry(inquiry: ContactInquiry): Observable<ContactInquiryResponse> {
+    console.log(this.endpoint);
+    return this.post<ContactInquiryResponse>(this.endpoint, inquiry);
   }
 }

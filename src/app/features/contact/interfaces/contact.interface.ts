@@ -1,16 +1,16 @@
-export interface ContactMessage {
-  name: string;
+export interface ContactInquiry {
+  names: string;
   email: string;
   phone?: string;
   company?: string;
   service: string;
   budget?: string;
-  message: string;
+  projectDetails: string;
 }
 
-export interface ContactResponse {
-  success: boolean;
+export interface ContactInquiryResponse {
   message: string;
+  reference: string;
 }
 
 export interface ContactMethod {
