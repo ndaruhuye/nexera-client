@@ -1,0 +1,26 @@
+name: nexera-group-client-staging
+
+services:
+  client:
+    # GitHub Actions builds this image using the Angular staging configuration.
+    #
+    # During deployment, IMAGE_TAG should normally be:
+    # staging-sha-<commit-hash>
+    image: "${IMAGE_NAME:-ghcr.io/ndaruhuye/nexera-client}:${IMAGE_TAG:-staging-latest}"
+
+    pull_policy: always
+
+    container_name: nexera-group-client-staging
+
+    # Separate host port from production.
+    # Only host-level Nginx can access it.
+    ports:
+      - "127.0.0.1:8083:3000"
+
+    environment:
+      PORT: 3000
+      NODE_ENV: staging
+
+    restart: unless-stopped
+
+    init: true

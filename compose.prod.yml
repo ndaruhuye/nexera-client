@@ -1,28 +1,25 @@
+name: nexera-group-client-production
+
 services:
   client:
-    # The image is built by GitHub Actions and stored in GHCR.
+    # GitHub Actions builds this image and pushes it to GHCR.
     #
-    # Example:
-    # ghcr.io/nexera-group/nexera-client:sha-abc123...
-    image: "${IMAGE_NAME}:${IMAGE_TAG:-latest}"
+    # During deployment, IMAGE_TAG should normally be:
+    # sha-<commit-hash>
+    image: "${IMAGE_NAME:-ghcr.io/ndaruhuye/nexera-client}:${IMAGE_TAG:-latest}"
 
-    # Predictable container name used by health checks and deployment scripts.
+    pull_policy: always
+
     container_name: nexera-group-client
 
-    # During direct IP testing:
-    #
-    # 0.0.0.0:8080 -> container port 3000
-    #
-    # Later, when host Nginx is configured, change HOST_BIND to:
-    #
-    # HOST_BIND=127.0.0.1
-    # ports:
-    #   - "${HOST_BIND:-127.0.0.1}:${HOST_PORT:-8080}:${PORT:-3000}"
+    # Only host-level Nginx can access this port.
     ports:
       - "127.0.0.1:8080:3000"
 
     environment:
-      # Must match the Dockerfile runtime port.
-      PORT: ${PORT:-3000}
+      PORT: 3000
+      NODE_ENV: production
 
     restart: unless-stopped
+
+    init: true
