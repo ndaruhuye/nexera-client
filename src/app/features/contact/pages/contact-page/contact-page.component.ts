@@ -239,15 +239,7 @@ export class ContactPageComponent {
               'Thank you. Your inquiry has been sent successfully.',
           });
 
-          this.contactForm.reset({
-            names: '',
-            email: '',
-            phone: '',
-            company: '',
-            service: '',
-            budget: '',
-            message: '',
-          });
+          this.contactForm.reset();
         },
         error: (error: unknown) => {
           this.isSubmitting = false;
